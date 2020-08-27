@@ -1,0 +1,8 @@
+/******************** To understand how to create fifo using mkfifo and mknod command
+in terminal*/
+STEP 1: mkfifo fifo1   -> create fifo with name fifo1 specify by p in ll
+STEP 2: mknod fifo2 p   -> create fifo with name fifo2 specify by p in ll
+STEP 3: echo "hello World" > fifo1  //call gets blocked until read 
+STEP 4: cat fifo1
+
+    
