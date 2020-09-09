@@ -1,0 +1,3 @@
+Welcome to linux programming
+Hey this is parent
+Hey this is child
