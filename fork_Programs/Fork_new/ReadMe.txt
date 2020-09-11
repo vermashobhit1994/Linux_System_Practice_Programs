@@ -10,21 +10,34 @@ Access file by command:
 Here check the below data struct (related to file) in fs.h:
     a) inode structure : by using the /struct inode \{
     b) file structure  : by using the /struct inode \{
-    c) file_operations structure: by using the /struct inode
+    c) file_operations structure: by using the /struct file_operations \{
 
 Data structure related to process:
     less sched.h
     a) struct task_struct  : instead of PCB
+     to search : struct task_struct \{
+        This structure contains: a) pointer to stack.                  
+                                 b) scheduling policy.
+                                 c) pid and gid.
+                                 d) children and sibling.
+                                 e) cpu usuage
+                                 f) signals and its handler.
+                                 g) soft and hard irq.
 
 3. Monitor the cpu usuage every 3 sec:
     top
+     Here VIRT -> Virtual memory size consumed by process currently.(in KB)
+           RES  -> Resident size i.e the actual physical memory consumed by process currently.(in KB)
+           SHR  -> sharable memory i.e How much of actual size of memory the memory is shared.(in KB) 
 
 4. To see the pid of current bash shell
     echo $$ 
    and parent process id
     echo $PPID 
 
-5.Various files and directories . Some of them are:
+5.Various files and directories in /proc/pid directory. The proc directory is also called as window to running linux kernel. 
+
+    Some of them are:
     
     a) cmdline : Command line passed to current shell.
     b) environ : all environment variables.
@@ -86,12 +99,16 @@ Data structure related to process:
      These can be changed by:
                              I)  system calls : i.e setuid and setgid
                              II) setting the bit i.e SUID and SGID while executing the program.
+     
 
    d) Saved User ID and Saved Group ID (suid and sgid): Switch temporary from root when non root work is required.
 	 ls -l /usr/bin/passwd : shows that its SUID bit set by s in owner permissions.
           
             if the non root user set the SUID bit then the euid change to suid.  -> See program 3_setresuid_understand.c
              To find the other programs with SUID bit set : find /usr/bin -perm /4000 
+           To change the s bit of a.out : 
+                    sudo chown root:shobhit a.out -> change the owner from vermas to root.
+                    sudo chmod +s a.out -> setting the s bit of a.out
         
     e) File System User and Group ID : Used to find the permissions when doing file operations.
     f) Supplementary group ID  : Additional group id to which a process belongs.
@@ -99,4 +116,31 @@ Data structure related to process:
 
         Here the new process gets this id from parent while the login shell get this Id from /etc/group file. 
 
+7. States of process
+    
+        /*
+ * The task state array is a strange "bitmap" of
+ * reasons to sleep. Thus "running" is zero, and
+ * you can test for combinations of others with
+ * simple bit tests.
+ */
+static const char * const task_state_array[] = {
+
+	/* states in TASK_REPORT: */
+	"R (running)",		/* 0x00 */
+	"S (sleeping)",		/* 0x01 */
+	"D (disk sleep)",	/* 0x02 */
+	"T (stopped)",		/* 0x04 */
+	"t (tracing stop)",	/* 0x08 */
+	"X (dead)",		/* 0x10 */
+	"Z (zombie)",		/* 0x20 */
+	"P (parked)",		/* 0x40 */
+
+	/* states beyond TASK_REPORT: */
+	"I (idle)",		/* 0x80 */
+};
+
+This structure is defined in source code in /fs/proc/array.c
+
+     
    
