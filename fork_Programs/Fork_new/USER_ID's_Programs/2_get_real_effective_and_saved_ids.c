@@ -10,7 +10,7 @@
 int main()
 {
     uid_t ruid,euid,suid;
-    if(getresuid(&ruid, &euid, &suid) == -1)
+    if(getresuid(&ruid, &euid, &suid) == -1)//to get the user real,effective and saved id's
     {
         perror("Error while getting the uid's \n");
         return 0;
@@ -22,7 +22,7 @@ int main()
     printf("The Saved user id = %d\n",suid);
     
     gid_t rgid,egid,sgid;
-    if(getresgid(&rgid, &egid, &sgid) == -1)
+    if(getresgid(&rgid, &egid, &sgid) == -1)//to get the group real,effective and saved id's
     {
         perror("Error while getting the uid's \n");
         return 0;
