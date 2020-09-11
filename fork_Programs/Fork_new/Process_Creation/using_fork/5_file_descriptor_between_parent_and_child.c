@@ -14,6 +14,7 @@ int main()
     char *msg_parent = "Hey this is parent\n";
 
     int fd;
+    //file created with RW Permissions for admin,R permissions for group and user 
     if( (fd = open("f1.txt",O_CREAT|O_WRONLY,0644) ) == -1)
     {
         perror("Error in creating file with required permissions\n");
@@ -28,6 +29,7 @@ int main()
     pid_t id = fork();
 
 /*************** here the fd is shared between the child and parent*************/
+/*************** here the file object is also shared between the parent and child*/
 
     /*************** Child process start****************************************/
     if(id == 0)
